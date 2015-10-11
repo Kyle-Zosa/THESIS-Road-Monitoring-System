@@ -19,7 +19,6 @@ function [vehicleTracks, nextId, tracksToMatch] = createNewVehicleTracks(vehicle
 
 		[class, vehicleType, len, width] = determineTypeAndSize(vehicleClassifier, image);
 		dimensions = [len width];
-		vehicleType
 
 		id = nextId;
 		index = matchTracks(tracksToMatch, class, vehicleType, dimensions, features, 0.9);

@@ -1,8 +1,8 @@
 includeFunctions;
 
 videoPath = 'G:\Thesis\Videos\Sept 7';
+videoName = '0600-0800.mpg';
 [~, videoDate] = fileparts(videoPath);
-videoName = '1400-1600.mpg';
 
 createSystemObjects;
 
@@ -17,6 +17,17 @@ while ~(isDone(aReader) || isDone(gReader) || isDone(nReader))
     [aFrame, gFrame, nFrame] = getFrames(aReader, gReader, nReader);
     [aFrame, gFrame, nFrame] = cropFrames(aFrame, gFrame, nFrame, cropBox);
     [aFrame, gFrame, nFrame] = resizeFrames(aFrame, gFrame, nFrame, resizeFactor);
+    
+%     aFrame = rgb2hsv(aFrame);
+%     gFrame = rgb2hsv(gFrame);
+%     nFrame = rgb2hsv(nFrame);
+%     aFrame(:,:,3) = histeq(aFrame(:,:,3));
+%     gFrame(:,:,3) = histeq(gFrame(:,:,3));
+%     nFrame(:,:,3) = histeq(nFrame(:,:,3));
+%     aFrame = hsv2rgb(aFrame);
+%     gFrame = hsv2rgb(gFrame);
+%     nFrame = hsv2rgb(nFrame);
+    
     
     [aMasked, gMasked, nMasked] = polyMaskFrames(aFrame, gFrame, nFrame, aPolyMask, gPolyMask, nPolyMask);
 
@@ -96,7 +107,7 @@ while ~(isDone(aReader) || isDone(gReader) || isDone(nReader))
         );
     %% NORTH TRACKS
 
-    displayFrames;
+%     displayFrames;
 
     aCount = outputCount(outputHandler.aCount, time, size(aBBoxes,1), aCount);
     gCount = outputCount(outputHandler.gCount, time, size(gBBoxes,1), gCount);
@@ -104,6 +115,7 @@ while ~(isDone(aReader) || isDone(gReader) || isDone(nReader))
 
     frameCount = frameCount + 1;
     time = frameCount/fps;
+%     w = waitforbuttonpress;
 end
 
 closeRecordFiles;

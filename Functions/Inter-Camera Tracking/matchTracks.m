@@ -11,7 +11,8 @@ function [index] = matchTracks(trackArray, class, vehicleType, dimensions, featu
     for i = 1:length(classMatchedTracks)
         featureScore = corr2(classMatchedTracks(i).features, features);
         dimensionsScore = 1 - (dimensions - classMatchedTracks(i).dimensions) ./ 100;
-        score(i) = score(i) + (featureScore / 2) + (mean(dimensionsScore) / 2);
+        dimensionsScore = (dimensionsScore(1)*2 + dimensionsScore(2))/3;
+        score(i) = (featureScore / 2) + (dimensionsScore/2);
     end
 
     scorePass = score(score > matchThreshold);
